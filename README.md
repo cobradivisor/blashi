@@ -1,2 +1,2 @@
 # blashi
-Destroy the enemy
+Destroy your opponents.  For fill your destiny. 
