@@ -1,22 +1,26 @@
 #!/usr/bin/env python
-
+import json
+from pprint import pprint
 
 class Map(object):
     horizontal_border = "--------------------------------------"
+    board = {}
+    def _output_rows(self, rows):
+        for row in rows:
+            print "- " + row.get('text','unknown') + "-" + str(row.get('hit_points',0)) 
 
     def output(self):
         print self.horizontal_border 
-        print "-"
-        print "-"
+        self._output_rows(self.board.get('rows',[]))
         print self.horizontal_border
 
     def load(self, f):
-        pass
-    
-def start_game(m):
+        with open(f) as data_file:    
+            self.board = json.load(data_file)
+
+def start_game(map_file):
     game_map = Map()
-    with open(m,'r') as map_file:
-        game_map.load(map_file)
+    game_map.load(map_file)
 
     game_map.output()
     

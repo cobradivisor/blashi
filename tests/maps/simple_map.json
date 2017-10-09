@@ -1,4 +1,4 @@
 { 
   "name": "simple map",
-  "rows": [ "XX XX", "XX XX"] 
+  "rows": [ { "text" : "cannon", "pic" :  "tests/pics/pic.png", "hit_points" : 2},{ "text" : "cannon", "pic" :  "tests/pics/pic.png", "hit_points" : 2}] 
 }

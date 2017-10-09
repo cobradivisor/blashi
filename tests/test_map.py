@@ -20,5 +20,5 @@ def test_should_create_2_by_2_map_with_no_objects(capsys):
     m.load("tests/maps/simple_map.json")
     m.output()
     out,n = capsys.readouterr()
-    expected_output = Map().horizontal_border + "\n- XX XX\n- XX XX\n" + Map().horizontal_border
+    expected_output = Map().horizontal_border + "\n- cannon-2\n- cannon-2\n" + Map().horizontal_border + "\n"
     assert expected_output in out    
