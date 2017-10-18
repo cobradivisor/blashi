@@ -37,9 +37,17 @@ def _create_grid(width,height,number_of_rows, number_of_columns):
 def _size_board(board):
     return (2,2)
 
-def _start_gui(board):
+def _draw_board(screen,grid,img):
 
     WHITE = (255, 255, 255)
+    screen.fill(WHITE)
+    for row in grid:
+        for rect in row: 
+            img = pygame.transform.scale(img, (rect.size))
+            screen.blit(img, rect)
+
+def _start_gui(board):
+
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame.init()
     width = 700
@@ -61,9 +69,11 @@ def _start_gui(board):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
- 
-        screen.fill(WHITE)
-        screen.blit(img, Rectangle(0,0, 16, 16))
+        _draw_board(screen,grid,img) 
+#        screen.fill(WHITE)
+#        rect = grid[0][0] 
+#        img = pygame.transform.scale(img, (rect.size))
+#        screen.blit(img, rect)
         pygame.display.flip()
  
         clock.tick(60)
