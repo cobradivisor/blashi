@@ -70,10 +70,6 @@ def _start_gui(board):
             if event.type == pygame.QUIT:
                 done = True
         _draw_board(screen,grid,img) 
-#        screen.fill(WHITE)
-#        rect = grid[0][0] 
-#        img = pygame.transform.scale(img, (rect.size))
-#        screen.blit(img, rect)
         pygame.display.flip()
  
         clock.tick(60)
