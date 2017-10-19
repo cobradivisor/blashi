@@ -11,16 +11,23 @@ class Map(object):
     board = {}
     def _output_rows(self, rows):
         for row in rows:
-            print "- " + row.get('text','unknown') + "-" + str(row.get('hit_points',0)) 
+            line = "- "
+            for item in row:
+                 line = line +  item.get('text','unknown') + "-" + str(item.get('hit_points',0))
+
+            print line 
 
     def output(self):
         print self.horizontal_border 
-        self._output_rows(self.board.get('rows',[]))
+        self._output_rows(self.board['rows'])
         print self.horizontal_border
 
     def load(self, f):
         with open(f) as data_file:    
             self.board = json.load(data_file)
+
+        if "rows" not in self.board:
+            self.board["rows"] = []
 
 def _create_grid(width,height,number_of_rows, number_of_columns):
     grid = []
@@ -35,10 +42,12 @@ def _create_grid(width,height,number_of_rows, number_of_columns):
     return grid
 
 def _size_board(board):
-    return (2,2)
+    max_number_of_columns = 0
+    for row in board["rows"]:
+        max_number_of_columns = max(max_number_of_columns,len(row)) 
+    return (len(board["rows"]),max_number_of_columns)
 
 def _draw_board(screen,grid,img):
-
     WHITE = (255, 255, 255)
     screen.fill(WHITE)
     for row in grid:
@@ -82,10 +91,10 @@ def start_game(map_file):
 
     game_map.output()
 
-    _start_gui(game_map)
+    _start_gui(game_map.board)
     
-def main(story_file):
-    start_game(story_file)
+def main(map_file):
+    start_game(map_file)
 
 if __name__ == "__main__":
     main(sys.argv[1])
