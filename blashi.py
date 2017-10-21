@@ -11,9 +11,9 @@ class Map(object):
     board = {}
     def _output_rows(self, rows):
         for row in rows:
-            line = "- "
+            line = "-"
             for item in row:
-                 line = line +  item.get('text','unknown') + "-" + str(item.get('hit_points',0))
+                 line = line + " " + item.get('text','unknown') + "-" + str(item.get('hit_points',0))
 
             print line 
 
@@ -47,11 +47,13 @@ def _size_board(board):
         max_number_of_columns = max(max_number_of_columns,len(row)) 
     return (len(board["rows"]),max_number_of_columns)
 
-def _draw_board(screen,grid,img):
+def _draw_board(screen,grid,board):
     WHITE = (255, 255, 255)
     screen.fill(WHITE)
-    for row in grid:
-        for rect in row: 
+    for row_index,row in enumerate(board['rows']):
+        for column_index,item in enumerate(row):
+            rect = grid[row_index][column_index]
+            img = pygame.image.load(item['pic'])
             img = pygame.transform.scale(img, (rect.size))
             screen.blit(img, rect)
 
@@ -65,7 +67,6 @@ def _start_gui(board):
     screen = pygame.display.set_mode(size)
  
     pygame.display.set_caption("Blashi")
-    img = pygame.image.load('pics/cannon.png')
     done = False
  
     clock = pygame.time.Clock()
@@ -78,7 +79,7 @@ def _start_gui(board):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-        _draw_board(screen,grid,img) 
+        _draw_board(screen,grid,board) 
         pygame.display.flip()
  
         clock.tick(60)
