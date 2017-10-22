@@ -1,5 +1,6 @@
 import pytest
 import blashi
+import pygame
 from blashi import Map
 from pygame.rect import Rect as Rectangle
 def test_balishi_main(capsys):
@@ -9,16 +10,6 @@ def test_balishi_main(capsys):
     out,_ = capsys.readouterr()
     expected_output = game_map.horizontal_border + "\n" + game_map.horizontal_border
     assert expected_output in out
-
-#def test_create_grid_with_one_element():
-#    grid = blashi._create_grid(100,100,1,1)
-#    assert grid == [[Rectangle(0,0,100,100)]]
-#
-#def test_create_grid_with_2_X_2():
-#    grid = blashi._create_grid(100,100,2,2)
-#    print grid
-#    assert grid == [ [Rectangle(0,0,50,50), Rectangle(50,0,50,50)], [Rectangle(0,50,50,50), Rectangle(50,50,50,50)] ]
-#
 
 def test_map_default_width_height():
     assert Map().width == 100
@@ -41,3 +32,4 @@ def test_map_assigns_grid_to_board_2_X_1():
     assert game_map.board['rows'][0][0]['rect'] == Rectangle(0,0,50,50)
     assert game_map.board['rows'][0][1]['rect'] == Rectangle(50,0,50,50)
     assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,50,50)
+
