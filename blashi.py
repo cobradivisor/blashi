@@ -22,10 +22,20 @@ class Map(object):
 
             print line 
 
-    def _load_grid(self,width,height,board):
-        for row in board['rows']:
-            for item in row:
-                item['rect'] = Rectangle(0,0,0,0)
+    def _load_grid(self):
+        number_of_rows,number_of_columns = self._size_board()
+        if number_of_rows > 0 and number_of_columns > 0:
+            grid_height = self.height/number_of_rows
+            grid_width = self.width/number_of_columns
+            for row_index, row in enumerate(self.board['rows']):
+                for column_index, item in enumerate(row):
+                    item['rect'] = Rectangle(column_index*grid_width,row_index*grid_height,grid_width,grid_height)
+
+    def _size_board(self):
+        max_number_of_columns = 0
+        for row in self.board["rows"]:
+            max_number_of_columns = max(max_number_of_columns,len(row)) 
+        return (len(self.board["rows"]),max_number_of_columns)
 
     def output(self):
         print self.horizontal_border 
@@ -39,62 +49,37 @@ class Map(object):
         if "rows" not in self.board:
             self.board["rows"] = []
 
-        self._load_grid(self.width,self.height,self.board)
+        self._load_grid()
 
-def _create_grid(width,height,number_of_rows, number_of_columns):
-    grid = []
-    grid_height = height/number_of_rows
-    grid_width = width/number_of_columns
-    for r in range(number_of_rows):
-        row = []
-        for c in range(number_of_columns):
-            row.append(Rectangle(c*grid_width,r*grid_height,grid_width,grid_height))
-         
-        grid.append(row)
-    return grid
-
-def _size_board(board):
-    max_number_of_columns = 0
-    for row in board["rows"]:
-        max_number_of_columns = max(max_number_of_columns,len(row)) 
-    return (len(board["rows"]),max_number_of_columns)
-
-def _draw_board(screen,grid,board):
+def _draw_board(screen,board):
     WHITE = (255, 255, 255)
     screen.fill(WHITE)
     for row_index,row in enumerate(board['rows']):
         for column_index,item in enumerate(row):
-            rect = grid[row_index][column_index]
             img = pygame.image.load(item['pic'])
-            img = pygame.transform.scale(img, (rect.size))
-            screen.blit(img, rect)
+            img = pygame.transform.scale(img, item['rect'].size)
+            screen.blit(img, item['rect'])
 
 def _add_grid_to_board(grid,board):
     pass
 
-def _start_gui(board):
+def _start_gui(game_board):
 
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame.init()
-    width = 700
-    height = 500 
-    size = (width, height)
+    size = (game_board.width, game_board.height)
     screen = pygame.display.set_mode(size)
  
     pygame.display.set_caption("Blashi")
     done = False
  
     clock = pygame.time.Clock()
-
-    number_of_rows,number_of_columns = _size_board(board)
-
-    grid = _create_grid(width,height,number_of_rows, number_of_columns)
  
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-        _draw_board(screen,grid,board) 
+        _draw_board(screen,game_board.board) 
         pygame.display.flip()
  
         clock.tick(60)
@@ -102,12 +87,12 @@ def _start_gui(board):
     pygame.quit()
 
 def start_game(map_file):
-    game_map = Map()
+    game_map = Map(700,500)
     game_map.load(map_file)
 
     game_map.output()
 
-    _start_gui(game_map.board)
+    _start_gui(game_map)
     
 def main(map_file):
     start_game(map_file)
