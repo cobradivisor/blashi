@@ -9,6 +9,11 @@ from pygame.rect import Rect as Rectangle
 class Map(object):
     horizontal_border = "--------------------------------------"
     board = {}
+    def __init__(self, width=100, height=100):
+        self.width = width
+        self.height = height
+        pass
+
     def _output_rows(self, rows):
         for row in rows:
             line = "-"
@@ -16,6 +21,11 @@ class Map(object):
                  line = line + " " + item.get('text','unknown') + "-" + str(item.get('hit_points',0))
 
             print line 
+
+    def _load_grid(self,width,height,board):
+        for row in board['rows']:
+            for item in row:
+                item['rect'] = Rectangle(0,0,0,0)
 
     def output(self):
         print self.horizontal_border 
@@ -28,6 +38,8 @@ class Map(object):
 
         if "rows" not in self.board:
             self.board["rows"] = []
+
+        self._load_grid(self.width,self.height,self.board)
 
 def _create_grid(width,height,number_of_rows, number_of_columns):
     grid = []
@@ -56,6 +68,9 @@ def _draw_board(screen,grid,board):
             img = pygame.image.load(item['pic'])
             img = pygame.transform.scale(img, (rect.size))
             screen.blit(img, rect)
+
+def _add_grid_to_board(grid,board):
+    pass
 
 def _start_gui(board):
 

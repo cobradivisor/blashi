@@ -39,3 +39,13 @@ def test_size_board_returns_max_columns_with_variable_column_map():
     rows,columns = blashi._size_board(game_map.board)
     assert rows == 2 
     assert columns == 2 
+
+
+def test_map_default_width_height():
+    assert Map().width == 100
+    assert Map().height == 100
+
+def test_map_assigns_grid_to_board():
+    game_map = Map()
+    game_map.load("tests/maps/simple_map.json")    
+    assert game_map.board['rows'][0][0]['rect'] == Rectangle(0,0,0,0)
