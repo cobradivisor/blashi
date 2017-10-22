@@ -30,8 +30,9 @@ class Map(object):
             for row_index, row in enumerate(self.board['rows']):
                 for column_index, item in enumerate(row):
                     item['rect'] = Rectangle(column_index*grid_width,row_index*grid_height,grid_width,grid_height)
-                    img = pygame.image.load(item['pic'])
-                    item['img'] = pygame.transform.scale(img, item['rect'].size)
+                    if 'pic' in item:
+                        img = pygame.image.load(item['pic'])
+                        item['surface'] = pygame.transform.scale(img, item['rect'].size)
 
     def _size_board(self):
         max_number_of_columns = 0
@@ -58,7 +59,8 @@ def _draw_board(screen,board):
     screen.fill(WHITE)
     for row_index,row in enumerate(board['rows']):
         for column_index,item in enumerate(row):
-            screen.blit(item['img'], item['rect'])
+            if 'surface' in item:
+                screen.blit(item['surface'], item['rect'])
 
 def _add_grid_to_board(grid,board):
     pass
