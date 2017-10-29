@@ -26,8 +26,8 @@ class Map(object):
             grid_height = self.height/number_of_rows
             grid_width = self.width/number_of_columns
             for row_index, row in enumerate(self.board['rows']):
-                for column_index, item in enumerate(row):
-                    item['rect'] = Rectangle(column_index*grid_width,row_index*grid_height,grid_width,grid_height)
+                for item in row:
+                    item['rect'] = Rectangle(item["grid"][1]*grid_width,item["grid"][0]*grid_height,grid_width,grid_height)
                     if 'pic' in item:
                         img = pygame.image.load(item['pic'])
                         item['surface'] = pygame.transform.scale(img, item['rect'].size)
