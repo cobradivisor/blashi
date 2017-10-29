@@ -15,16 +15,8 @@ def test_map_default_width_height():
     assert Map().width == 100
     assert Map().height == 100
 
-def test_map_default_grid_size():
-    assert Map().columns == 1
-    assert Map().rows == 1
-
-def test_map_allows_input_of_rows_and_columns_for_grid():
-    assert Map(100,100,3,4).columns == 3
-    assert Map(100,100,3,4).rows == 4 
-
 def test_map_assigns_grid_to_board():
-    game_map = Map(100,100,1,2)
+    game_map = Map(100,100)
     game_map.load("tests/maps/simple_map.json")
     assert len(game_map.board['rows']) == 2
     assert len(game_map.board['rows'][0]) == 1    
@@ -32,7 +24,7 @@ def test_map_assigns_grid_to_board():
     assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,100,50)
 
 def test_map_assigns_grid_to_board_2_X_1():
-    game_map = Map(100,100,2,2)
+    game_map = Map(100,100)
     game_map.load("tests/maps/variable_columns_map.json")    
     assert len(game_map.board['rows']) == 2
     assert len(game_map.board['rows'][0]) == 2

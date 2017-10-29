@@ -9,12 +9,9 @@ from pygame.rect import Rect as Rectangle
 class Map(object):
     horizontal_border = "--------------------------------------"
     board = {}
-    def __init__(self, width=100, height=100, columns=1, rows=1):
+    def __init__(self, width=100, height=100):
         self.width = width
         self.height = height
-        self.columns = columns
-        self.rows = rows 
-        pass
 
     def _output_rows(self, rows):
         for row in rows:
@@ -24,10 +21,10 @@ class Map(object):
 
             print line 
 
-    def _load_grid(self):
-        if self.rows > 0 and self.columns > 0:
-            grid_height = self.height/self.rows
-            grid_width = self.width/self.columns
+    def _load_grid(self, number_of_rows, number_of_columns):
+        if number_of_rows > 0 and number_of_columns > 0:
+            grid_height = self.height/number_of_rows
+            grid_width = self.width/number_of_columns
             for row_index, row in enumerate(self.board['rows']):
                 for column_index, item in enumerate(row):
                     item['rect'] = Rectangle(column_index*grid_width,row_index*grid_height,grid_width,grid_height)
@@ -54,7 +51,9 @@ class Map(object):
         if "rows" not in self.board:
             self.board["rows"] = []
 
-        self._load_grid()
+        rows = self.board.get("grid_rows", 0)
+        columns = self.board.get("grid_columns",0)
+        self._load_grid(rows,columns)
 
 def _draw_board(screen,board):
     WHITE = (255, 255, 255)
