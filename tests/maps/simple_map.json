@@ -1,4 +1,5 @@
 { 
   "name": "simple map",
+  "grid": [100,100],
   "rows": [ [{ "text" : "cannon", "pic" :  "pics/cannon.png", "hit_points" : 2}],[{ "text" : "cannon", "pic" :  "pics/cannon.png", "hit_points" : 2}]] 
 }

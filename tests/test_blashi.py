@@ -15,6 +15,14 @@ def test_map_default_width_height():
     assert Map().width == 100
     assert Map().height == 100
 
+def test_map_default_grid_size():
+    assert Map().columns == 1
+    assert Map().rows == 1
+
+def test_map_allows_input_of_rows_and_columns_for_grid():
+    assert Map(100,100,3,4).columns == 3
+    assert Map(100,100,3,4).rows == 4 
+
 def test_map_assigns_grid_to_board():
     game_map = Map()
     game_map.load("tests/maps/simple_map.json")

@@ -9,9 +9,11 @@ from pygame.rect import Rect as Rectangle
 class Map(object):
     horizontal_border = "--------------------------------------"
     board = {}
-    def __init__(self, width=100, height=100):
+    def __init__(self, width=100, height=100, columns=1, rows=1):
         self.width = width
         self.height = height
+        self.columns = columns
+        self.rows = rows 
         pass
 
     def _output_rows(self, rows):
@@ -34,10 +36,17 @@ class Map(object):
                         img = pygame.image.load(item['pic'])
                         item['surface'] = pygame.transform.scale(img, item['rect'].size)
 
+    def _length_of_row(self,row):
+        total = 0
+        for item in row:
+            total+= item.get('grid_size',1)
+
+        return total
+
     def _size_board(self):
         max_number_of_columns = 0
         for row in self.board["rows"]:
-            max_number_of_columns = max(max_number_of_columns,len(row)) 
+            max_number_of_columns = max(max_number_of_columns,self._length_of_row(row)) 
         return (len(self.board["rows"]),max_number_of_columns)
 
     def output(self):
