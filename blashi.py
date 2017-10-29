@@ -25,10 +25,9 @@ class Map(object):
             print line 
 
     def _load_grid(self):
-        number_of_rows,number_of_columns = self._size_board()
-        if number_of_rows > 0 and number_of_columns > 0:
-            grid_height = self.height/number_of_rows
-            grid_width = self.width/number_of_columns
+        if self.rows > 0 and self.columns > 0:
+            grid_height = self.height/self.rows
+            grid_width = self.width/self.columns
             for row_index, row in enumerate(self.board['rows']):
                 for column_index, item in enumerate(row):
                     item['rect'] = Rectangle(column_index*grid_width,row_index*grid_height,grid_width,grid_height)
@@ -42,12 +41,6 @@ class Map(object):
             total+= item.get('grid_size',1)
 
         return total
-
-    def _size_board(self):
-        max_number_of_columns = 0
-        for row in self.board["rows"]:
-            max_number_of_columns = max(max_number_of_columns,self._length_of_row(row)) 
-        return (len(self.board["rows"]),max_number_of_columns)
 
     def output(self):
         print self.horizontal_border 
