@@ -20,8 +20,8 @@ def test_map_assigns_grid_to_board():
     game_map.load("tests/maps/simple_map.json")
     assert len(game_map.board['rows']) == 2
     assert len(game_map.board['rows'][0]) == 1    
-    assert game_map.board['rows'][0][0]['rect'] == Rectangle(0,0,100,50)
-    assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,100,50)
+    assert game_map.board['rows'][0][0]['rect'] == Rectangle(0,0,50,50)
+    assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,50,50)
 
 def test_map_assigns_grid_to_board_2_X_1():
     game_map = Map(100,100)
@@ -33,3 +33,19 @@ def test_map_assigns_grid_to_board_2_X_1():
     assert game_map.board['rows'][0][1]['rect'] == Rectangle(50,0,50,50)
     assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,50,50)
 
+def test_map_assigns_default_size_to_item_when_not_specified():
+    game_map = Map()
+    game_map.load("tests/maps/variable_size.json")
+    assert game_map.board['rows'][0][0]['grid_size'] == [1,1]
+
+def test_map_assigns_size_to_item():
+    game_map = Map()
+    game_map.load("tests/maps/variable_size.json")
+    assert game_map.board['rows'][1][0]['grid_size'] == [2,1]
+
+def test_map_assigns_size_to_item():
+    game_map = Map()
+    game_map.load("tests/maps/variable_size.json")
+    assert game_map.board['rows'][0][0]['rect'] == Rectangle(0,0,50,50)
+    assert game_map.board['rows'][1][0]['rect'] == Rectangle(0,50,100,50)
+    
